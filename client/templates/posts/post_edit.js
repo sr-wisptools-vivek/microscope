@@ -28,13 +28,13 @@ Template.postEdit.events({
         
         Meteor.call('postUpdate', currentPostId, postProperties, function(error, result) {
             if (error)
-                return throwError(error.reason);
+                return Errors.throw(error.reason);
             
             if (result.postExists)
-                throwError('This link has already been posted');
+                Errors.throw('This link has already been posted');
             
             if (result.postDenyEdit)
-                throwError('You can only edit posts that you own');
+                Errors.throw('You can only edit posts that you own');
             
             Router.go('postPage', {_id: result._id});
         });
